@@ -8,7 +8,7 @@ bool PlayableFactory::registerPlayableType(const std::string& name, PlayableFact
     return true;
 }
 
-std::unique_ptr<Playable> PlayableFactory::create(const std::string &type) {
+std::shared_ptr<Playable> PlayableFactory::create(const std::string &type) {
     if (auto it = playableTypes().find(type); it != playableTypes().end())
         return it->second();
 

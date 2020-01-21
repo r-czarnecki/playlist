@@ -14,7 +14,7 @@ private:
 
 public:
     static std::string factoryName() { return "audio"; }
-    static std::unique_ptr<Playable> createType() { return std::make_unique<Song>(); }
+    static std::shared_ptr<Playable> createType() { return std::make_shared<Song>(); }
 
     std::string type() override;
     std::string header() override;

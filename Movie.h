@@ -14,7 +14,7 @@ private:
 
 public:
     static std::string factoryName() { return "video"; }
-    static std::unique_ptr<Playable> createType() { return std::make_unique<Movie>(); }
+    static std::shared_ptr<Playable> createType() { return std::make_shared<Movie>(); }
 
     std::string type() override;
     std::string header() override;

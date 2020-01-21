@@ -7,14 +7,14 @@
 
 class PlayableFactory {
 private:
-    using TPlayable = std::unique_ptr<Playable>(*)();
+    using TPlayable = std::shared_ptr<Playable>(*)();
     static std::map<std::string, TPlayable> &playableTypes();
 
 public:
     PlayableFactory() = delete;
 
     static bool registerPlayableType(const std::string& name, TPlayable playable);
-    static std::unique_ptr<Playable> create(const std::string& type);
+    static std::shared_ptr<Playable> create(const std::string& type);
 };
 
 #endif //KLASY_PLAYABLEFACTORY_H
