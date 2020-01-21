@@ -1,5 +1,12 @@
-#include "File.h"
+#include <regex>
 
-File::File(std::string fd) {
-    // TODO: pobierz typ pliku, a resztę wrzuć do description?
+#include "File.h"
+#include "TagSplitter.h"
+
+File::File(const std::string& fd) {
+    std::string delimeter = TagSplitter::TAG_DELIMETER();
+    auto first_delimeter = fd.find_first_of(delimeter);
+
+    type = fd.substr(0, first_delimeter);
+    fileDescription = fd.substr(first_delimeter + 1);
 }

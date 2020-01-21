@@ -3,15 +3,13 @@
 
 #include <string>
 
-// TODO: Rozdzielać żetony w opisie pliku tutaj, czy w fabryce?
-
 class File {
 private:
     std::string type;
     std::string fileDescription;
 
 public:
-    File(std::string fd);
+    explicit File(const std::string& fd);
 
     std::string getType() { return type; }
     std::string getDescription() { return fileDescription; }

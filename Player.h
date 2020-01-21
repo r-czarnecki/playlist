@@ -11,7 +11,7 @@ class Player {
 
 public:
     std::shared_ptr<Playable> openFile(File file);
-    std::shared_ptr<Playlist> createPlaylist(std::string name);
+    std::shared_ptr<Playlist> createPlaylist(const std::string& name);
 
 
 };

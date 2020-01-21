@@ -13,8 +13,11 @@ private:
     std::string displayText;
 
 public:
+    explicit Movie(const std::string &description);
+
     static std::string factoryName() { return "video"; }
-    static std::shared_ptr<Playable> createType() { return std::make_shared<Movie>(); }
+    static std::shared_ptr<Playable> createType(const std::string &description)
+    { return std::make_shared<Movie>(description); }
 
     std::string type() override;
     std::string header() override;

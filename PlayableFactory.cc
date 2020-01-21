@@ -8,9 +8,9 @@ bool PlayableFactory::registerPlayableType(const std::string& name, PlayableFact
     return true;
 }
 
-std::shared_ptr<Playable> PlayableFactory::create(const std::string &type) {
+PlayableFactory::pPlayable PlayableFactory::create(const std::string &type, const std::string &description) {
     if (auto it = playableTypes().find(type); it != playableTypes().end())
-        return it->second();
+        return it->second(description);
 
     return nullptr;
 }

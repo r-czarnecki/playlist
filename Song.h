@@ -13,8 +13,11 @@ private:
     std::string lyrics;
 
 public:
+    explicit Song(const std::string &description);
+
     static std::string factoryName() { return "audio"; }
-    static std::shared_ptr<Playable> createType() { return std::make_shared<Song>(); }
+    static std::shared_ptr<Playable> createType(const std::string &description)
+    { return std::make_shared<Song>(description); }
 
     std::string type() override;
     std::string header() override;
