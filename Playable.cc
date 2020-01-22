@@ -7,7 +7,7 @@ void Playable::play() {
     std::cout << type() << " [" << header() <<"]: " << description() << std::endl;
 }
 
-Playable::Playable(const std::string &description)
-: playableTags (TagSplitter::splitTags(description)) {
+Playable::Playable(const std::string &description, bool omitMetadata)
+: playableTags (TagSplitter::splitTags(description, omitMetadata)) {
 
 }

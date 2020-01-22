@@ -22,6 +22,7 @@ public:
     std::string type() override;
     std::string header() override;
     std::string description() override;
+    void play() override;
 };
 
 #endif //KLASY_SONG_H

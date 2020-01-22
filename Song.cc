@@ -17,7 +17,9 @@ std::string Song::description() {
     return lyrics;
 }
 
-Song::Song(const std::string &description) : Playable(description), lyrics(TagSplitter::getContent(description)) {
+Song::Song(const std::string &description)
+: Playable(description, true)
+, lyrics(TagSplitter::getContent(description)) {
     // TODO: Wyjątki (jeśli nie ma 'title' lub 'artist')
 
     if (playableTags.count("title"))
@@ -28,4 +30,12 @@ Song::Song(const std::string &description) : Playable(description), lyrics(TagSp
     std::cout << "Song: ";
     play();
     std::cout << std::endl;
+}
+
+void Song::play() {
+    if (std::regex_match(lyrics, TagSplitter::ALLOWED_CONTENT_REGEX()))
+        Playable::play();
+    else {
+        // TODO: Rzuć wyjątek (treść zawiera niedozwolone znaki)
+    }
 }
