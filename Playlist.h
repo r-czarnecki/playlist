@@ -15,7 +15,7 @@ public:
     void add(shared_ptr<Playable> element, int position);
     void remove();
     void remove(int position);
-    void setMode(PlayMode& mode);
+    void setMode(shared_ptr<PlayMode> mode);
     
     void play() override;
     std::string type() override;
@@ -24,7 +24,7 @@ public:
 
 private:
     vector<shared_ptr<Playable>> elements;
-    unique_ptr<PlayMode> mode;
+    shared_ptr<PlayMode> mode;
     string name;
 };
 

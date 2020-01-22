@@ -23,8 +23,8 @@ void Playlist::remove(int position) {
     elements.erase(elements.begin() + position);
 }
 
-void Playlist::setMode(PlayMode& mode) {
-    this->mode = make_unique<PlayMode>(mode);
+void Playlist::setMode(shared_ptr<PlayMode> mode) {
+    this->mode = move(mode);
 }
 
 void Playlist::play() {
