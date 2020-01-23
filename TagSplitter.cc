@@ -7,30 +7,33 @@
 TagSplitter::tagMap TagSplitter::splitTags(const std::string &description, bool omitLastMetadata) {
     tagMap newMap{};
     std::string tags;
-    // TODO: Matchowanie pustych stringów (tj. "video|title:abcde||year:gówno|content")
-    std::regex re("[^" + TAG_DELIMETER() + "]+");
 
     if (omitLastMetadata) {
         auto lastDelimeter = description.find_last_of(TAG_DELIMETER());
         tags = description.substr(0, lastDelimeter);
     }
 
-    for (std::sregex_iterator it = std::sregex_iterator(tags.begin(), tags.end(), re);
-         it != std::sregex_iterator();
-         ++it) {
+    size_t pos = 0;
+    std::string tag, name, value;
+    while (true) {
+        auto tagDelimeter = tags.find_first_of(TAG_DELIMETER(), pos);
+        tag = tags.substr(pos, tagDelimeter-pos);
 
-        std::string tag = it->str();
+        pos = tagDelimeter + 1;
 
         auto valDelimeter = tag.find_first_of(VALUE_DELIMETER());
 
         if (valDelimeter == std::string::npos) {
-            //throw CorruptTagException();
+            throw CorruptTagException();
         }
 
-        std::string name = tag.substr(0, valDelimeter);
-        std::string value = tag.substr(valDelimeter + 1);
+        name = tag.substr(0, valDelimeter);
+        value = tag.substr(valDelimeter + 1);
 
         newMap[name] = value;
+
+        if (tagDelimeter == std::string::npos)
+            break;
     }
 
     return newMap;
