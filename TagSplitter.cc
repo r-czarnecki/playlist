@@ -95,7 +95,7 @@ std::string TagSplitter::ALLOWED_CONTENT_CHARACTERS() {
 }
 
 int TagSplitter::PARSE_NUMERIC_TAG(const std::string& yearTagValue) {
-    if (!std::regex_match(yearTagValue, std::regex("^[0-9]*$")))
+    if (!std::regex_match(yearTagValue, std::regex("^[0-9]+$")))
         throw CorruptYearMetadataException();
 
     int year = std::stoi(yearTagValue);
