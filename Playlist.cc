@@ -7,8 +7,7 @@
 
 
 Playlist::Playlist(string name)
-: elements()
-, starter(createSequenceMode())
+: starter(createSequenceMode())
 , name(name) {}
 
 void Playlist::add(shared_ptr<Playable> element) {
@@ -61,19 +60,8 @@ std::string Playlist::description() {
     return "";
 }
 
-bool Playlist::hasElements() {
-    return true;
-}
-
-std::vector<std::shared_ptr<Playable>> *Playlist::getElements() {
-    return &elements;
-}
-
-bool Playlist::doesPathExist(shared_ptr<Playable> from) {
-    if(!from->hasElements())
-        return false;
-        
-    for(shared_ptr<Playable> playlist : *from->getElements())
+bool Playlist::doesPathExist(shared_ptr<Playable> from) {       
+    for(shared_ptr<Playable> playlist : from->getElements())
         if(playlist.get() == this || doesPathExist(playlist))
             return true;
     

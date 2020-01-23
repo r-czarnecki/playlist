@@ -22,8 +22,7 @@ public:
 
     virtual void play();
 
-    virtual bool hasElements();
-    virtual std::vector<std::shared_ptr<Playable>> *getElements();
+    std::vector<std::shared_ptr<Playable>> &getElements();
 };
 
 #endif //KLASY_PLAYABLE_H
