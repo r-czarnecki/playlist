@@ -11,15 +11,16 @@ private:
     std::string artist;
     std::string title;
 
+protected:
+    std::string type() override;
+    std::string header() override;
+    
 public:
     explicit Song(const TagSplitter::tagMap &description, const std::string &content);
 
     static std::string factoryName() { return "audio"; }
     static std::shared_ptr<PlayableWithContent> createType(const TagSplitter::tagMap &description, const std::string &content)
     { return std::make_shared<Song>(description, content); }
-
-    std::string type() override;
-    std::string header() override;
 };
 
 #endif //KLASY_SONG_H

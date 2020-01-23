@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Song.h"
 #include "PlayableFactory.h"
 #include "TagSplitter.h"

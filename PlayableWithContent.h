@@ -7,13 +7,13 @@
 class PlayableWithContent : public Playable {
 protected:
     std::string content;
+    std::string description() override;
 
 public:
     PlayableWithContent(const TagSplitter::tagMap &description, const std::string &content)
     : Playable(description)
     , content(content) {}
 
-    std::string description() override;
 };
 
 
