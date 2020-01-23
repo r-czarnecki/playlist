@@ -3,6 +3,7 @@
 #include "TagSplitter.h"
 #include "CorruptYearMetadataException.h"
 #include "CorruptTagException.h"
+#include "CorruptNumericMetadataException.h"
 
 TagSplitter::tagMap TagSplitter::splitTags(const std::string &description, bool omitLastMetadata) {
     tagMap newMap{};
@@ -95,8 +96,8 @@ std::string TagSplitter::ALLOWED_CONTENT_CHARACTERS() {
 }
 
 int TagSplitter::PARSE_NUMERIC_TAG(const std::string& yearTagValue) {
-    if (!std::regex_match(yearTagValue, std::regex("^[0-9]+$")))
-        throw CorruptYearMetadataException();
+    if (!std::regex_match(yearTagValue, std::regex("^([+-]?[1-9]\\d*|0)$")))
+        throw CorruptNumericMetadataException();
 
     int year = std::stoi(yearTagValue);
 

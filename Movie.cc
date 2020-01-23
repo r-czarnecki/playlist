@@ -4,6 +4,7 @@
 #include "TagSplitter.h"
 #include "CorruptContentException.h"
 #include "MissingMetadataException.h"
+#include "CorruptYearMetadataException.h"
 
 bool Movie::isRegistered = PlayableFactory::registerPlayableType(Movie::factoryName(), Movie::createType);
 
@@ -30,8 +31,13 @@ Movie::Movie(const TagSplitter::tagMap &description, const std::string &content)
     else
         throw MissingMetaDataException("title");
 
-    if (playableTags.count("year"))
+    if (playableTags.count("year")) {
         year = TagSplitter::PARSE_NUMERIC_TAG(playableTags["year"]);
+
+        // Rok zerowy lub ujemny jest niedozwolony
+        if (year <= 0)
+            throw CorruptYearMetadataException();
+    }
     else
         throw MissingMetaDataException("year");
 }
