@@ -1,7 +1,3 @@
-//
-// Created by wojtekk23 on 23.01.2020.
-//
-
 #ifndef KLASY_PLAYEREXCEPTION_H
 #define KLASY_PLAYEREXCEPTION_H
 

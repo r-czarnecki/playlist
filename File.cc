@@ -1,5 +1,3 @@
-#include <regex>
-
 #include "File.h"
 #include "TagSplitter.h"
 #include "CorruptFileException.h"

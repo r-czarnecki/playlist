@@ -1,4 +1,3 @@
-#include <memory>
 #include <iostream>
 #include "TagSplitter.h"
 #include "CorruptYearMetadataException.h"
