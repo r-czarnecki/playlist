@@ -6,12 +6,13 @@
 class MissingMetaDataException : public PlayerException {
 private:
     std::string missingTag;
+    std::string missingTagMessage;
 
 protected:
     const char *playerExceptionInfo() const override;
 
 public:
-    explicit MissingMetaDataException(const char *tag) : missingTag(tag) {};
+    explicit MissingMetaDataException(const char *tag);
 };
 
 #endif //KLASY_MISSINGMETADATAEXCEPTION_H

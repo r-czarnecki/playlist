@@ -1,15 +1,10 @@
-#include <sstream>
 #include "MissingMetadataException.h"
 
 const char *MissingMetaDataException::playerExceptionInfo() const {
-    std::stringstream ss;
-    ss << "missing tag ";
-    ss << "(" << missingTag << ")";
+   return missingTagMessage.c_str();
+}
 
-    // TODO: Napraw to
-
-    const std::string& tmp(ss.str());
-    const char* cstr = tmp.c_str();
-
-    return cstr;
+MissingMetaDataException::MissingMetaDataException(const char *tag)
+: missingTag(tag) {
+    missingTagMessage = "missing tag (" + missingTag + ")";
 }
