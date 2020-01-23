@@ -4,15 +4,16 @@
 #include <map>
 #include <vector>
 #include <memory>
+#include "TagSplitter.h"
 
 class Playable {
 protected:
-    std::map<std::string, std::string> playableTags;
+    TagSplitter::tagMap playableTags;
     std::vector<std::shared_ptr<Playable>> elements;
 
 public:
     Playable() = default;
-    explicit Playable(const std::string &description, bool omitLastMetadata = true);
+    explicit Playable(const TagSplitter::tagMap &description);
     virtual ~Playable() = default;
 
     virtual void play();

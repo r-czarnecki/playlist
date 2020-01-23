@@ -2,7 +2,7 @@
 #include "PlayableFactory.h"
 
 std::shared_ptr<Playable> Player::openFile(File file) {
-    return PlayableFactory::create(file.getType(), file.getDescription());
+    return PlayableFactory::create(file.getType(), file.getTagMap(), file.getDescription());
 }
 
 std::shared_ptr<Playlist> Player::createPlaylist(const std::string& name) {

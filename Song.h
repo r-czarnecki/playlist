@@ -3,25 +3,23 @@
 
 #include <string>
 #include <memory>
-#include "Playable.h"
+#include "PlayableWithContent.h"
 
-class Song : public Playable {
+class Song : public PlayableWithContent {
 private:
     static bool isRegistered;
     std::string artist;
     std::string title;
-    std::string lyrics;
 
 public:
-    explicit Song(const std::string &description);
+    explicit Song(const TagSplitter::tagMap &description, const std::string &content);
 
     static std::string factoryName() { return "audio"; }
-    static std::shared_ptr<Playable> createType(const std::string &description)
-    { return std::make_shared<Song>(description); }
+    static std::shared_ptr<PlayableWithContent> createType(const TagSplitter::tagMap &description, const std::string &content)
+    { return std::make_shared<Song>(description, content); }
 
     std::string type() override;
     std::string header() override;
-    std::string description() override;
 };
 
 #endif //KLASY_SONG_H

@@ -20,14 +20,9 @@ std::string Movie::header() {
     return ss.str();
 }
 
-std::string Movie::description() {
-    return displayText;
-}
-
-Movie::Movie(const std::string &description)
-: Playable(description, true)
-, displayText(TagSplitter::decodeROT13(TagSplitter::getContent(description))) {
-    if (!std::regex_match(displayText, TagSplitter::ALLOWED_CONTENT_REGEX()))
+Movie::Movie(const TagSplitter::tagMap &description, const std::string &content)
+: PlayableWithContent(description, TagSplitter::decodeROT13(content)) {
+    if (!std::regex_match(content, TagSplitter::ALLOWED_CONTENT_REGEX()))
         throw CorruptContentException();
 
     if (playableTags.count("title"))

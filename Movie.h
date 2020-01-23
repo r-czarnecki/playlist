@@ -3,25 +3,23 @@
 
 #include <string>
 #include <memory>
-#include "Playable.h"
+#include "PlayableWithContent.h"
 
-class Movie : public Playable {
+class Movie : public PlayableWithContent {
 private:
     static bool isRegistered;
     std::string title;
     int year;
-    std::string displayText;
 
 public:
-    explicit Movie(const std::string &description);
+    explicit Movie(const TagSplitter::tagMap &description, const std::string &content);
 
     static std::string factoryName() { return "video"; }
-    static std::shared_ptr<Playable> createType(const std::string &description)
-    { return std::make_shared<Movie>(description); }
+    static std::shared_ptr<PlayableWithContent> createType(const TagSplitter::tagMap &description, const std::string &content)
+    { return std::make_shared<Movie>(description, content); }
 
     std::string type() override;
     std::string header() override;
-    std::string description() override;
 };
 
 #endif //KLASY_MOVIE_H

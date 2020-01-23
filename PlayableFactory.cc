@@ -9,9 +9,10 @@ bool PlayableFactory::registerPlayableType(const std::string& name, PlayableFact
     return true;
 }
 
-PlayableFactory::pPlayable PlayableFactory::create(const std::string &type, const std::string &description) {
+PlayableFactory::pPlayable
+PlayableFactory::create(const std::string &type, const TagSplitter::tagMap &description, const std::string &content) {
     if (auto it = playableTypes().find(type); it != playableTypes().end())
-        return it->second(description);
+        return it->second(description, content);
     else
         throw UnsupportedTypeException();
 }
