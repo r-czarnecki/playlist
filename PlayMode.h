@@ -7,6 +7,7 @@ using namespace std;
 class PlayMode {
 public:
     virtual int next() = 0;
+    virtual ~PlayMode() = default;
 
 protected:
     int size;
