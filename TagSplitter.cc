@@ -1,10 +1,14 @@
 #include <memory>
+#include <iostream>
 #include "TagSplitter.h"
+#include "CorruptYearMetadataException.h"
+#include "CorruptTagException.h"
 
 TagSplitter::tagMap TagSplitter::splitTags(const std::string &description, bool omitLastMetadata) {
     tagMap newMap{};
     std::string tags;
-    std::regex re("[^" + TAG_DELIMETER() + "]*");
+    // TODO: Matchowanie pustych stringów (tj. "video|title:abcde||year:gówno|content")
+    std::regex re("[^" + TAG_DELIMETER() + "]+");
 
     if (omitLastMetadata) {
         auto lastDelimeter = description.find_last_of(TAG_DELIMETER());
@@ -19,7 +23,7 @@ TagSplitter::tagMap TagSplitter::splitTags(const std::string &description, bool 
         auto valDelimeter = tag.find_first_of(VALUE_DELIMETER());
 
         if (valDelimeter == std::string::npos) {
-            // TODO: rzuć wyjątek (metadane bez separatora ':')
+            //throw CorruptTagException();
         }
 
         std::string name = tag.substr(0, valDelimeter);
@@ -76,12 +80,25 @@ std::string TagSplitter::decodeROT13(const std::string &text) {
 }
 
 std::regex TagSplitter::ALLOWED_CONTENT_REGEX() {
-    // TODO: Czy mamy matchować diakrytyki?
-    static std::regex CONTENT_REGEX("^[0-9a-zA-Z\\s" + ALLOWED_CONTENT_CHARACTERS() + "]*$");
+    static std::regex CONTENT_REGEX("^[" + ALPHANUMERIC_WHITESPACE_CHARACTERS() + ALLOWED_CONTENT_CHARACTERS() + "]*$");
 
     return CONTENT_REGEX;
 }
 
 std::string TagSplitter::ALLOWED_CONTENT_CHARACTERS() {
-    return ",.!?':;-";
+    // Escape hypen so that it does not have to be positionally dependent
+    return ",.!?':;\\-";
+}
+
+int TagSplitter::PARSE_NUMERIC_TAG(const std::string& yearTagValue) {
+    if (!std::regex_match(yearTagValue, std::regex("^[0-9]*$")))
+        throw CorruptYearMetadataException();
+
+    int year = std::stoi(yearTagValue);
+
+    return year;
+}
+
+std::string TagSplitter::ALPHANUMERIC_WHITESPACE_CHARACTERS() {
+    return "0-9a-zA-Z\\s";
 }

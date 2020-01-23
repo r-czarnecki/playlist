@@ -1,22 +1,18 @@
-#ifndef PLAYEREXCEPTION_H
-#define PLAYEREXCEPTION_H
+//
+// Created by wojtekk23 on 23.01.2020.
+//
+
+#ifndef KLASY_PLAYEREXCEPTION_H
+#define KLASY_PLAYEREXCEPTION_H
 
 #include <exception>
-using namespace std;
+#include <string>
 
-class PlayerException : public exception {
+class PlayerException : public std::exception {
+protected:
+    virtual const char * playerExceptionInfo() const = 0;
 public:
-    virtual char const* what() const throw() = 0;
+    const char * what() const noexcept override;
 };
 
-class PositionDoesNotExist : public PlayerException {
-public:
-    char const* what() const throw() override { return "Position does not exist."; }
-};
-
-class ThereIsACycle : public PlayerException {
-public:
-    char const* what() const throw() override { return "Playlists create a cycle."; }
-};
-
-#endif
+#endif //KLASY_PLAYEREXCEPTION_H

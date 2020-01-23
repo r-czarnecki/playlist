@@ -9,7 +9,7 @@ class Movie : public Playable {
 private:
     static bool isRegistered;
     std::string title;
-    std::string year;
+    int year;
     std::string displayText;
 
 public:
@@ -22,7 +22,6 @@ public:
     std::string type() override;
     std::string header() override;
     std::string description() override;
-    void play() override;
 };
 
 #endif //KLASY_MOVIE_H

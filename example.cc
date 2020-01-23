@@ -40,23 +40,23 @@ int main() {
     mishmash->setMode(createSequenceMode());
     mishmash->play();
 
-    // try {
-    //     auto unsupported = player.openFile(File("mp3|artist:Unsupported|title:Unsupported|Content"));
-    // } catch (PlayerException const& e) {
-    //     std::cout << e.what() << std::endl;
-    // }
+     try {
+         auto unsupported = player.openFile(File("mp3|artist:Unsupported|title:Unsupported|Content"));
+     } catch (PlayerException const& e) {
+         std::cout << e.what() << std::endl;
+     }
 
-    // try {
-    //     auto corrupted = player.openFile(File("Corrupt"));
-    // } catch (PlayerException const& e) {
-    //     std::cout << e.what() << std::endl;
-    // }
+     try {
+         auto corrupted = player.openFile(File("Corrupt"));
+     } catch (PlayerException const& e) {
+         std::cout << e.what() << std::endl;
+     }
 
-    // try {
-    //     auto corrupted = player.openFile(File("audio|artist:Louis Armstrong|title:Hello, Dolly!|%#!@*&"));
-    // } catch (PlayerException const& e) {
-    //     std::cout << e.what() << std::endl;
-    // }
+     try {
+         auto corrupted = player.openFile(File("audio|artist:Louis Armstrong|title:Hello, Dolly!|%#!@*&"));
+     } catch (PlayerException const& e) {
+         std::cout << e.what() << std::endl;
+     }
 
     return 0;
 }

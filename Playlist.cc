@@ -2,8 +2,8 @@
 #include "Playlist.h"
 #include "SequenceMode.h"
 #include "lib_playlist.h"
-#include "PlayerException.h"
-
+#include "PositionDoesNotExistException.h"
+#include "CycleException.h"
 
 
 Playlist::Playlist(string name)
@@ -16,11 +16,11 @@ void Playlist::add(shared_ptr<Playable> element) {
 }
 
 void Playlist::add(shared_ptr<Playable> element, int position) {
-    if(position > elements.size())
-        throw PositionDoesNotExist();
+    if(position < 0 || position > (int)elements.size())
+        throw PositionDoesNotExistException();
 
     if(doesPathExist(element))
-        throw ThereIsACycle();
+        throw CycleException();
 
     elements.insert(elements.begin() + position, element);
 }
@@ -30,10 +30,8 @@ void Playlist::remove() {
 }
 
 void Playlist::remove(int position) {
-    if(position >= elements.size())
-        throw PositionDoesNotExist();
-
-    if(elements[position]->type() == "Playlist")
+    if(position < 0 || position >= (int)elements.size())
+        throw PositionDoesNotExistException();
 
     elements.erase(elements.begin() + position);
 }
