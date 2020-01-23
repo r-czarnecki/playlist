@@ -1,10 +1,11 @@
 #include <iostream>
 #include "Playlist.h"
 #include "SequenceMode.h"
+#include "lib_playlist.h"
 
 Playlist::Playlist(string name)
 : elements()
-, mode(new SequenceMode())
+, starter(createSequenceMode())
 , name(name) {}
 
 void Playlist::add(shared_ptr<Playable> element) {
@@ -23,19 +24,17 @@ void Playlist::remove(int position) {
     elements.erase(elements.begin() + position);
 }
 
-void Playlist::setMode(shared_ptr<PlayMode> mode) {
-    this->mode = move(mode);
+void Playlist::setMode(shared_ptr<PlayModeStarter> starter) {
+    this->starter = starter;
 }
 
 void Playlist::play() {
     cout << type() + " [" + header() + "]\n";
 
-    int pos = mode->start(elements.size());
+    auto mode = starter->create(elements.size());
     
-    while(pos != -1) {
+    for(int pos = mode->next(); pos != -1; pos = mode->next())
         elements[pos]->play();
-        pos = mode->next();
-    }
 }
 
 std::string Playlist::type() {

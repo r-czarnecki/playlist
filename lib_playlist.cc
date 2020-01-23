@@ -1,13 +1,22 @@
 #include "lib_playlist.h"
+#include "OddEvenMode.h"
+#include "ShuffleMode.h"
+#include "SequenceMode.h"
 
-std::shared_ptr<PlayMode> createSequenceMode() {
-    return std::move(std::make_shared<SequenceMode>(SequenceMode()));
+std::shared_ptr<PlayModeStarter> createSequenceMode() {
+    return make_shared<PlayModeStarter>(PlayModeStarter([](int size){
+        return make_unique<SequenceMode>(SequenceMode(size));
+    }));
 }
 
-std::shared_ptr<PlayMode> createShuffleMode(long long int seed) {
-    return std::move(std::make_shared<ShuffleMode>(ShuffleMode(seed)));
+std::shared_ptr<PlayModeStarter> createShuffleMode(long long int seed) {
+    return make_shared<PlayModeStarter>(PlayModeStarter([seed](int size){
+        return make_unique<ShuffleMode>(ShuffleMode(size, seed));
+    }));
 }
 
-std::shared_ptr<PlayMode> createOddEvenMode() {
-    return std::move(std::make_shared<OddEvenMode>(OddEvenMode()));
+std::shared_ptr<PlayModeStarter> createOddEvenMode() {
+    return make_shared<PlayModeStarter>(PlayModeStarter([](int size){
+        return make_unique<OddEvenMode>(OddEvenMode(size));
+    }));
 }

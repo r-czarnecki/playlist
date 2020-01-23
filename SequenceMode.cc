@@ -1,15 +1,15 @@
 #include "SequenceMode.h"
 
-int SequenceMode::start(int size) {
+SequenceMode::SequenceMode(int size) {
     this->size = size;
     currentPosition = 0;
-    return currentPosition;
 }
 
 int SequenceMode::next() {
-    if(currentPosition >= size - 1)
+    if(currentPosition >= size)
         return -1;
     
+    int tmp = currentPosition;
     currentPosition++;
-    return currentPosition;
+    return tmp;
 }
