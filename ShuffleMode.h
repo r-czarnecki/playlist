@@ -7,8 +7,7 @@ using namespace std;
 
 class ShuffleMode : public PlayMode {
 public:
-    ShuffleMode(long long int seed);
-    int start(int size) override;
+    ShuffleMode(int size, long long int seed);
     int next() override;
 
 private:

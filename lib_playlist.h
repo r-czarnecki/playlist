@@ -2,14 +2,12 @@
 #define LIBPLAYLIST_H
 
 #include <memory>
-#include "SequenceMode.h"
-#include "ShuffleMode.h"
-#include "OddEvenMode.h"
+#include "PlayModeStarter.h"
 #include "Player.h"
 #include "PlayerException.h"
 
-std::shared_ptr<PlayMode> createSequenceMode();
-std::shared_ptr<PlayMode> createShuffleMode(long long int seed);
-std::shared_ptr<PlayMode> createOddEvenMode();
+std::shared_ptr<PlayModeStarter> createSequenceMode();
+std::shared_ptr<PlayModeStarter> createShuffleMode(long long int seed);
+std::shared_ptr<PlayModeStarter> createOddEvenMode();
 
 #endif

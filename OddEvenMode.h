@@ -5,7 +5,7 @@
 
 class OddEvenMode : public PlayMode {
 public:
-    int start(int size) override;
+    OddEvenMode(int size);
     int next() override;
 };
 

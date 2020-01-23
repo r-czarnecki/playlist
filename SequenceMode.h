@@ -5,7 +5,7 @@
 
 class SequenceMode : public PlayMode {
 public:
-    int start(int size) override;
+    SequenceMode(int size);
     int next() override;
 };
 
