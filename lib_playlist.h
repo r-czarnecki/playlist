@@ -6,6 +6,7 @@
 #include "ShuffleMode.h"
 #include "OddEvenMode.h"
 #include "Player.h"
+#include "PlayerException.h"
 
 std::shared_ptr<PlayMode> createSequenceMode();
 std::shared_ptr<PlayMode> createShuffleMode(long long int seed);

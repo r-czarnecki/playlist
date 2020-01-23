@@ -14,10 +14,12 @@ public:
 
     static std::string decodeROT13(const std::string& text);
 
-    static std::string TAG_DELIMETER();
-    static std::string VALUE_DELIMETER();
-    static std::string ALLOWED_CONTENT_CHARACTERS();
-    static std::regex ALLOWED_CONTENT_REGEX();
+    static std::string  TAG_DELIMETER();
+    static std::string  VALUE_DELIMETER();
+    static std::string  ALLOWED_CONTENT_CHARACTERS();
+    static std::string  ALPHANUMERIC_WHITESPACE_CHARACTERS();
+    static std::regex   ALLOWED_CONTENT_REGEX();
+    static int          PARSE_NUMERIC_TAG(const std::string& yearTagValue);
 };
 
 #endif //KLASY_TAGSPLITTER_H

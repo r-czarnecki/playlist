@@ -2,6 +2,8 @@
 #include "Song.h"
 #include "PlayableFactory.h"
 #include "TagSplitter.h"
+#include "CorruptContentException.h"
+#include "MissingMetadataException.h"
 
 bool Song::isRegistered = PlayableFactory::registerPlayableType(Song::factoryName(), Song::createType);
 
@@ -20,22 +22,16 @@ std::string Song::description() {
 Song::Song(const std::string &description)
 : Playable(description, true)
 , lyrics(TagSplitter::getContent(description)) {
-    // TODO: Wyjątki (jeśli nie ma 'title' lub 'artist')
+    if (!std::regex_match(lyrics, TagSplitter::ALLOWED_CONTENT_REGEX()))
+        throw CorruptContentException();
 
     if (playableTags.count("title"))
         title = playableTags["title"];
+    else
+        throw MissingMetaDataException("title");
+
     if (playableTags.count("artist"))
         artist = playableTags["artist"];
-
-    std::cout << "Song: ";
-    play();
-    std::cout << std::endl;
-}
-
-void Song::play() {
-    if (std::regex_match(lyrics, TagSplitter::ALLOWED_CONTENT_REGEX()))
-        Playable::play();
-    else {
-        // TODO: Rzuć wyjątek (treść zawiera niedozwolone znaki)
-    }
+    else
+        throw MissingMetaDataException("artist");
 }

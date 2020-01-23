@@ -9,7 +9,7 @@ protected:
 
 public:
     Playable() = default;
-    explicit Playable(const std::string &description, bool omitMetadata = true);
+    explicit Playable(const std::string &description, bool omitLastMetadata = true);
     virtual ~Playable() = default;
 
     virtual void play();

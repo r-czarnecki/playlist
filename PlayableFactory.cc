@@ -1,4 +1,5 @@
 #include "PlayableFactory.h"
+#include "UnsupportedTypeException.h"
 
 bool PlayableFactory::registerPlayableType(const std::string& name, PlayableFactory::TPlayable playable) {
     if (auto it = playableTypes().find(name); it != playableTypes().end())
@@ -11,8 +12,8 @@ bool PlayableFactory::registerPlayableType(const std::string& name, PlayableFact
 PlayableFactory::pPlayable PlayableFactory::create(const std::string &type, const std::string &description) {
     if (auto it = playableTypes().find(type); it != playableTypes().end())
         return it->second(description);
-
-    return nullptr;
+    else
+        throw UnsupportedTypeException();
 }
 
 std::map<std::string, PlayableFactory::TPlayable> &PlayableFactory::playableTypes()  {

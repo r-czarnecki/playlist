@@ -2,6 +2,8 @@
 #include "Movie.h"
 #include "PlayableFactory.h"
 #include "TagSplitter.h"
+#include "CorruptContentException.h"
+#include "MissingMetadataException.h"
 
 bool Movie::isRegistered = PlayableFactory::registerPlayableType(Movie::factoryName(), Movie::createType);
 
@@ -10,7 +12,12 @@ std::string Movie::type() {
 }
 
 std::string Movie::header() {
-    return title + ", " + year;
+    std::stringstream ss;
+    ss << title;
+    ss << ", ";
+    ss << year;
+
+    return ss.str();
 }
 
 std::string Movie::description() {
@@ -20,22 +27,16 @@ std::string Movie::description() {
 Movie::Movie(const std::string &description)
 : Playable(description, true)
 , displayText(TagSplitter::decodeROT13(TagSplitter::getContent(description))) {
-    // TODO: Wyjątki (jeśli nie znaleziono tagów 'title' i 'year')
+    if (!std::regex_match(displayText, TagSplitter::ALLOWED_CONTENT_REGEX()))
+        throw CorruptContentException();
 
     if (playableTags.count("title"))
         title = playableTags["title"];
+    else
+        throw MissingMetaDataException("title");
+
     if (playableTags.count("year"))
-        year = playableTags["year"];
-
-    std::cout << "Movie: ";
-    play();
-    std::cout << std::endl;
-}
-
-void Movie::play() {
-    if (std::regex_match(displayText, TagSplitter::ALLOWED_CONTENT_REGEX()))
-        Playable::play();
-    else {
-        // TODO: Rzuć wyjątek (treść zawiera niedozwolone znaki)
-    }
+        year = TagSplitter::PARSE_NUMERIC_TAG(playableTags["year"]);
+    else
+        throw MissingMetaDataException("year");
 }
