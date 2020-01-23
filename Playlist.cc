@@ -2,6 +2,9 @@
 #include "Playlist.h"
 #include "SequenceMode.h"
 #include "lib_playlist.h"
+#include "PlayerException.h"
+
+
 
 Playlist::Playlist(string name)
 : elements()
@@ -9,10 +12,16 @@ Playlist::Playlist(string name)
 , name(name) {}
 
 void Playlist::add(shared_ptr<Playable> element) {
-    elements.push_back(element);
+    add(element, elements.size());
 }
 
 void Playlist::add(shared_ptr<Playable> element, int position) {
+    if(position > elements.size())
+        throw PositionDoesNotExist();
+
+    if(doesPathExist(element))
+        throw ThereIsACycle();
+
     elements.insert(elements.begin() + position, element);
 }
 
@@ -21,6 +30,11 @@ void Playlist::remove() {
 }
 
 void Playlist::remove(int position) {
+    if(position >= elements.size())
+        throw PositionDoesNotExist();
+
+    if(elements[position]->type() == "Playlist")
+
     elements.erase(elements.begin() + position);
 }
 
@@ -47,4 +61,23 @@ std::string Playlist::header() {
 
 std::string Playlist::description() {
     return "";
+}
+
+bool Playlist::hasElements() {
+    return true;
+}
+
+std::vector<std::shared_ptr<Playable>> *Playlist::getElements() {
+    return &elements;
+}
+
+bool Playlist::doesPathExist(shared_ptr<Playable> from) {
+    if(!from->hasElements())
+        return false;
+        
+    for(shared_ptr<Playable> playlist : *from->getElements())
+        if(playlist.get() == this || doesPathExist(playlist))
+            return true;
+    
+    return false;
 }

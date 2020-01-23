@@ -6,7 +6,6 @@ using namespace std;
 
 class PlayMode {
 public:
-    // virtual unique_ptr<PlayMode> start(int size) = 0;
     virtual int next() = 0;
 
 protected:

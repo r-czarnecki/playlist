@@ -8,6 +8,15 @@ void Playable::play() {
 }
 
 Playable::Playable(const std::string &description, bool omitMetadata)
-: playableTags (TagSplitter::splitTags(description, omitMetadata)) {
+: playableTags (TagSplitter::splitTags(description, omitMetadata))
+, elements() {
 
+}
+
+bool Playable::hasElements() {
+    return false;
+}
+
+std::vector<std::shared_ptr<Playable>> *Playable::getElements() {
+    return nullptr;
 }
