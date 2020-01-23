@@ -19,11 +19,13 @@ public:
     void setMode(shared_ptr<PlayModeStarter> starter);
     
     void play() override;
+    bool hasElements() override;
+    std::vector<std::shared_ptr<Playable>> *getElements() override;
+
+protected:
     std::string type() override;
     std::string header() override;
     std::string description() override;
-    bool hasElements() override;
-    std::vector<std::shared_ptr<Playable>> *getElements() override;
 
 private:
     bool doesPathExist(shared_ptr<Playable> from);
