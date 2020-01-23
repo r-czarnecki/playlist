@@ -19,7 +19,6 @@ TagSplitter::tagMap TagSplitter::splitTags(const std::string &description, bool 
          it != std::sregex_iterator();
          ++it) {
         std::string tag = it->str();
-        std::cout << "tag: " << tag << std::endl;
 
         auto valDelimeter = tag.find_first_of(VALUE_DELIMETER());
 

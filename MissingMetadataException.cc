@@ -6,5 +6,10 @@ const char *MissingMetaDataException::playerExceptionInfo() const {
     ss << "missing tag ";
     ss << "(" << missingTag << ")";
 
-    return ss.str().c_str();
+    // TODO: Napraw to
+
+    const std::string& tmp(ss.str());
+    const char* cstr = tmp.c_str();
+
+    return cstr;
 }
